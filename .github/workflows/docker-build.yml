@@ -16,7 +16,7 @@ jobs:
        run: pip install flask mysql-connector-python pytest
      - name: Run tests
        working-directory: ./backend
-       run: pytest
+       run: python -m pytest
   build-and-push:
     needs: test
     runs-on: ubuntu-latest
