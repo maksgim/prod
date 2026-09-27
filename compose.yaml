@@ -12,8 +12,7 @@ services:
       - app_network
 
   backend:
-    build:
-      context: ./backend
+    image: ghcr.io/maksgim/web-app-backend:latest
     restart: unless-stopped
     environment:
       - DB_HOST=mysql

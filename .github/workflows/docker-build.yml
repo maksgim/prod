@@ -3,7 +3,23 @@ on:
     branches: [ main ]
 
 jobs:
-  build-and-push:
+  test:
+   runs-on: ubuntu-latest
+   steps:
+     - name: Checkout code
+       uses: actions/checkout@v4
+     - name: Set up Python
+       uses: actions/setup-python@v5
+       with:
+         python-version: '3.12'
+     - name: Install dependencies
+       run: pip install flask mysql-connector-python pytest
+     - name: Run tests
+       working-directory: ./backend
+       run: pytest
+
+ build-and-push:
+    need: test
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
@@ -20,6 +36,7 @@ jobs:
         context: ./backend
         push: true
         tags: ghcr.io/${{ github.repository_owner }}/web-app-backend:latest
+
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
